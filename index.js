@@ -61,12 +61,9 @@ const questions = [
 
 const makeReadMe = inquirer.prompt(questions)
 
-function writeToFile(fileName, data) {
-
-}
-
 async function init() {
-    await makeReadMe
+    const readMe = await makeReadMe
+    fs.writeFileSync('README.md', JSON.stringify(readMe))
 }
 
 init();

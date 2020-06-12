@@ -1,2 +1,1 @@
-# README.md-Generator
-Generate a README.md file through Node.js
+{"title":"test","desc":"","install":"","usage":"","license":"MIT","contribBool":true,"contrib":"","tests":"","contact":""}
