@@ -61,9 +61,43 @@ const questions = [
 
 const makeReadMe = inquirer.prompt(questions)
 
+const varToString = varObj => Object.keys(varObj)[0]
+
+function tocLinker(section){
+    sectionId = varToString({section})
+    tocIds.push(sectionId)
+    return `<a id=toc-${sectionId}></a>`
+}
+
+const tocHeaders = []
+const tocIds = []
+
+function sectionGenerator(sectionHeader, section){
+    tocHeaders.push(sectionHeader)
+    return `${tocLinker(section)}\n## ${sectionHeader}\n${section}\n`
+}
+
+const tocGenerator = ()=> {let toc = ''; 
+    tocHeaders.forEach((header, iter)=>toc += `${iter+1}. [${header}](#toc-${tocIds[iter]})\n`); 
+    return toc
+}
+
 async function init() {
-    const readMe = await makeReadMe
-    fs.writeFileSync('README.md', JSON.stringify(readMe))
+    const readMeJSON = await makeReadMe
+    let {title, desc, install, usage, license, contrib, tests, contact} = readMeJSON
+    title = `# ${title}\n`
+    desc = sectionGenerator('Description', desc)
+    install = sectionGenerator('Installation', install)
+    usage = sectionGenerator('Usage', usage)
+    license = sectionGenerator('License', license)
+    contrib = sectionGenerator('Contributing', contrib)
+    tests = sectionGenerator('Tests', tests)
+    contact = sectionGenerator('Questions', contact)
+    const readMe = `${title}${tocGenerator()}${desc}${install}${usage}`+
+        `${license}${contrib}${tests}${contact}`
+        
+        
+    fs.writeFileSync('README.md', readMe)
 }
 
 init();
