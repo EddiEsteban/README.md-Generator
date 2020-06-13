@@ -7,6 +7,8 @@ let [titleId, descId, installId, usageId, licenseId,
     = ['title', 'desc', 'install', 'usage', 'license',
     'contrib', 'tests', 'contact']
 
+const shellify = string => `\`\`\`sh\n${string}\n\`\`\``
+
 const questions = [
     {
         type: 'input', //input is default type
@@ -22,12 +24,12 @@ const questions = [
     {
         name: installId,
         message: `Provide ${chalk.red(`installation`)} instructions.`,
-        default: `\`\`\`sh\nnpm install <your package name>\n\`\`\``
+        default: `npm install <your package name>`
     },
     {
         name: usageId,
         message: `Provide ${chalk.red(`usage`)} instructions.`,
-        default: `\`\`\`sh\nnode index.js\n\`\`\``
+        default: `node index.js`
     },
     {
         name: licenseId,
@@ -43,7 +45,7 @@ const questions = [
         name: contribId,
         message: `Provide instructions for ${chalk.red(`contributing`)}.`,
         default: `Contact the repository owner if you would like to contribute.`,
-        when: (answers) => answers.contribBool
+        when: answers => answers.contribBool
     },
     {
         name: testsId,
@@ -51,9 +53,15 @@ const questions = [
         default: `Test cases go here`
     },
     {
+        type: 'confirm',
+        name: 'contactBool',
+        message: `Do you want to provide your public github information for the questions section?`
+    },
+    {
         name: contactId,
         message: `Provide your github username.`,
-        default: `EddiEsteban`
+        default: `EddiEsteban`,
+        when: answers => answers.contactBool
     },
 ]
 
@@ -82,8 +90,8 @@ async function init() {
     let {title, desc, install, usage, license, contrib, tests, contact} = readMeJSON
     title = `# ${title}\n`
     desc = sectionGenerator('Description', desc, descId)
-    install = sectionGenerator('Installation', install, installId)
-    usage = sectionGenerator('Usage', usage, usageId)
+    install = sectionGenerator('Installation', shellify(install), installId)
+    usage = sectionGenerator('Usage', shellify(usage), usageId)
     license = sectionGenerator('License', license, licenseId)
     contrib = sectionGenerator('Contributing', contrib, contribId)
     tests = sectionGenerator('Tests', tests, testsId)
