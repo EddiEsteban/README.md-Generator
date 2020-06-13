@@ -16,13 +16,13 @@
 
 7. [Questions](#toc-contact)
 
-<a id=toc-desc></a>
+<a id='toc-desc'></a>
 
 ## Description
 
 This node application takes user input and outputs a README file.
 
-<a id=toc-install></a>
+<a id='toc-install'></a>
 
 ## Installation
 
@@ -31,7 +31,7 @@ Below is an example command for installation, for a fictitious package if this r
 ```sh
 npm install readmegen
 ```
-<a id=toc-usage></a>
+<a id='toc-usage'></a>
 
 ## Usage
 
@@ -53,16 +53,17 @@ MIT
 
 This repository is not accepting contributors.
 
-<a id=toc-tests></a>
+<a id='toc-tests'></a>
 
 ## Tests
 
 ![Demo](./assets/img/demo2.png)
 
 See attached media to see how this README was first generated.
-<a id=toc-contact></a>
+<a id='toc-contact'></a>
 
 ## Questions
+
 ![Profile picture of EddiEsteban](https://avatars1.githubusercontent.com/u/60436198?v=4)
 
 Please direct any questions, concerns, and compliments to [EddiEsteban](https://github.com/EddiEsteban)
