@@ -1,6 +1,6 @@
 ![Forks](https://img.shields.io/github/forks/EddiEsteban/README.md-Generator) ![Stars](https://img.shields.io/github/stars/EddiEsteban/README.md-Generator) ![License](https://img.shields.io/github/license/EddiEsteban/README.md-Generator) 
 
-# README.md-Generator
+# README.md Generator
 
 1. [Description](#toc-desc)
 
@@ -17,11 +17,13 @@
 7. [Questions](#toc-contact)
 
 <a id=toc-desc></a>
+
 ## Description
 
 This node application takes user input and outputs a README file.
 
 <a id=toc-install></a>
+
 ## Installation
 
 Below is an example command for installation, for a fictitious package if this repo did have a public package.
@@ -30,25 +32,32 @@ Below is an example command for installation, for a fictitious package if this r
 npm install readmegen
 ```
 <a id=toc-usage></a>
+
 ## Usage
 
 ```sh
 node index.js
 ```
+
+![Demo](./assets/img/demo.gif)
+
 <a id=toc-license></a>
+
 ## License
 
 MIT
 
 <a id=toc-contrib></a>
+
 ## Contributing
 
 This repository is not accepting contributors.
 
 <a id=toc-tests></a>
+
 ## Tests
 
-![Demo])(./assets/img/demo.png)
+![Demo](./assets/img/demo2.png)
 
 See attached media to see how this README was first generated.
 <a id=toc-contact></a>
