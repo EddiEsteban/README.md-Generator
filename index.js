@@ -81,7 +81,7 @@ const makeReadMe = inquirer.prompt(questions)
 
 function tocLinker(sectionId){
     tocIds.push(sectionId)
-    return `<a id=toc-${sectionId}></a>`
+    return `<a id='toc-${sectionId}'></a>`
 }
 
 const tocHeaders = []
@@ -89,11 +89,11 @@ const tocIds = []
 
 function sectionGenerator(sectionHeader, section, sectionId){
     tocHeaders.push(sectionHeader)
-    return `${tocLinker(sectionId)}\n## ${sectionHeader}\n${section}\n`
+    return `\n${tocLinker(sectionId)}\n## ${sectionHeader}\n${section}\n`
 }
 
 const tocGenerator = ()=> {let toc = ''; 
-    tocHeaders.forEach((header, iter)=>toc += `${iter+1}. [${header}](#toc-${tocIds[iter]})\n`); 
+    tocHeaders.forEach((header, iter)=>toc += `\n${iter+1}. [${header}](#toc-${tocIds[iter]})\n`); 
     return toc
 }
 
@@ -102,7 +102,7 @@ async function init() {
 
     
 
-    let {title, desc, install, usage, license, contribBool, contrib, tests, contactBool, contact, pass} = readMeJSON
+    let {title, desc, install, usage, license, contribBool, contrib, tests, contactBool, contact} = readMeJSON
     
     if (!contribBool) {contrib = `This repository is not accepting contributors.`}
     if (!contactBool) {contact = `Please direct any questions, concerns, and compliments to the contributors of this repo.`}
@@ -113,7 +113,7 @@ async function init() {
         `![License](https://img.shields.io/github/license/${contact}/${githubName(title)}) `+
         `\n`
 
-    title = `# ${title}\n`
+    title = `\n# ${title}\n`
     desc = sectionGenerator('Description', desc, descId)
     install = sectionGenerator('Installation', shellify(install), installId)
     usage = sectionGenerator('Usage', shellify(usage), usageId)
@@ -126,7 +126,7 @@ async function init() {
     const githubData = await axios.get(githubUrl)
         .then(response => response.data)
 
-    let questions = `![Profile picture of ${contact}](${githubData.avatar_url})\n`+
+    let questions = `![Profile picture of ${contact}](${githubData.avatar_url})\n\n`+
         `Please direct any questions, concerns, and compliments to [${contact}](${githubData.html_url})\n ` 
         //accessing email requires authentication, and the password method is deprecated. See: https://developer.github.com/changes/2020-02-14-deprecating-password-auth/
     questions = sectionGenerator('Questions', questions, contactId)
