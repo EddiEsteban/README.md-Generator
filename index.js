@@ -72,7 +72,7 @@ const questions = [
     {
         name: contactId,
         message: `Provide your github username.`,
-        default: `EddiEsteban`,
+        default: `YourUsername`,
         when: answers => answers.contactBool
     },
 ]
@@ -105,7 +105,7 @@ async function init() {
     let {title, desc, install, usage, license, contribBool, contrib, tests, contactBool, contact, pass} = readMeJSON
     
     if (!contribBool) {contrib = `This repository is not accepting contributors.`}
-    if (!contactBool) {contact = ``}
+    if (!contactBool) {contact = `Please direct any questions, concerns, and compliments to the contributors of this repo.`}
 
     let badges = 
         `![Forks](https://img.shields.io/github/forks/${contact}/${githubName(title)}) `+
