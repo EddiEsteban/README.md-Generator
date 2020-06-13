@@ -1,6 +1,6 @@
-![Forks](https://img.shields.io/github/forks/EddiEsteban/Untitled-Project) ![Stars](https://img.shields.io/github/stars/EddiEsteban/Untitled-Project) ![License](https://img.shields.io/github/license/EddiEsteban/Untitled-Project) 
+![Forks](https://img.shields.io/github/forks/EddiEsteban/My-Project) ![Stars](https://img.shields.io/github/stars/EddiEsteban/My-Project) ![License](https://img.shields.io/github/license/EddiEsteban/My-Project) 
 
-# Untitled Project
+# My Project
 
 1. [Description](#toc-desc)
 
@@ -38,7 +38,7 @@ MIT
 
 <a id='toc-contrib'></a>
 ## Contributing
-Contact the repository owner if you would like to contribute.
+This repository is not accepting contributors.
 
 <a id='toc-tests'></a>
 ## Tests
