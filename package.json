@@ -9,6 +9,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@octokit/auth": "^2.0.0",
+    "@octokit/auth-basic": "^1.4.5",
+    "axios": "^0.19.2",
     "dotenv": "^8.0.0",
     "inquirer": "^6.5.2"
   }

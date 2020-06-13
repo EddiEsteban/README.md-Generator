@@ -1,6 +1,7 @@
 const inquirer = require('inquirer')
 const fs = require('fs')
 const chalk = require('chalk')
+const axios = require('axios')
 
 let [titleId, descId, installId, usageId, licenseId, 
     contribId, testsId, contactId] 
@@ -50,7 +51,7 @@ const questions = [
     {
         type: 'confirm',
         name: 'contribBool',
-        message: 'Are you accepting new contributors?'
+        message: `Are you accepting new ${chalk.magenta(`contributors`)}?`
     },
     {
         name: contribId,
@@ -66,7 +67,7 @@ const questions = [
     {
         type: 'confirm',
         name: 'contactBool',
-        message: `Do you want to provide your public github information for the questions section?`
+        message: `Do you want to provide your public github information for the ${chalk.magenta(`questions`)} section?`
     },
     {
         name: contactId,
@@ -99,13 +100,18 @@ const tocGenerator = ()=> {let toc = '';
 async function init() {
     const readMeJSON = await makeReadMe
 
+    
 
-    let {title, desc, install, usage, license, contrib, tests, contact} = readMeJSON
+    let {title, desc, install, usage, license, contribBool, contrib, tests, contactBool, contact, pass} = readMeJSON
+    
+    if (!contribBool) {contrib = `This repository is not accepting contributors.`}
+    if (!contactBool) {contact = ``}
 
     let badges = 
-        `![](https://img.shields.io/github/forks/${contact}/${githubName(title)})\n`+
-        `![](https://img.shields.io/github/stars/${contact}/${githubName(title)})\n`+
-        `![](https://img.shields.io/github/license/${contact}/${githubName(title)})\n`
+        `![Forks](https://img.shields.io/github/forks/${contact}/${githubName(title)}) `+
+        `![Stars](https://img.shields.io/github/stars/${contact}/${githubName(title)}) `+
+        `![License](https://img.shields.io/github/license/${contact}/${githubName(title)}) `+
+        `\n`
 
     title = `# ${title}\n`
     desc = sectionGenerator('Description', desc, descId)
@@ -114,9 +120,21 @@ async function init() {
     license = sectionGenerator('License', license, licenseId)
     contrib = sectionGenerator('Contributing', contrib, contribId)
     tests = sectionGenerator('Tests', tests, testsId)
-    contact = sectionGenerator('Questions', contact, contactId)
+
+    githubUrl = `https://api.github.com/users/${contact}`
+
+    const githubData = await axios.get(githubUrl)
+        .then(response => response.data)
+
+    let questions = `![Profile picture of ${contact}](${githubData.avatar_url})\n`+
+        `Please direct any questions, concerns, and compliments to [${contact}](${githubData.html_url})\n ` 
+        //accessing email requires authentication, and the password method is deprecated. See: https://developer.github.com/changes/2020-02-14-deprecating-password-auth/
+    questions = sectionGenerator('Questions', questions, contactId)
+
+
+
     const readMe = `${badges}${title}${tocGenerator()}${desc}${install}${usage}`+
-        `${license}${contrib}${tests}${contact}`
+        `${license}${contrib}${tests}${questions}`
         
         
     fs.writeFileSync('README.md', readMe)
