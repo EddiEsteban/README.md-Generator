@@ -1,42 +1,37 @@
-// The README will be populated with the following:
-
-// * At least one badge
-// * Project title
-// * Description
-// * Table of Contents
-// * Installation
-// * Usage
-// * License
-// * Contributing
-// * Tests
-// * Questions
-//   * User GitHub profile picture
-//   * User GitHub email
-
 const inquirer = require('inquirer')
 const fs = require('fs')
+const chalk = require('chalk')
+
+let [titleId, descId, installId, usageId, licenseId, 
+    contribId, testsId, contactId] 
+    = ['title', 'desc', 'install', 'usage', 'license',
+    'contrib', 'tests', 'contact']
 
 const questions = [
     {
         type: 'input', //input is default type
-        name: 'title',
-        message: 'Provide the title of your project.'
+        name: titleId,
+        message: `Provide the ${chalk.red(`title`)} of your project.`,
+        default: `Untitled Project`
     },
     {
-        name: 'desc',
-        message: 'Provide a succinct description of your project.'
+        name: descId,
+        message: `Provide a succinct ${chalk.red(`description`)} of your project.`,
+        default: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla ac posuere lorem. Praesent porta, purus et commodo tempus, mi leo blandit orci, eget efficitur quam odio a lectus. Nulla vehicula scelerisque est eget efficitur.`
     },
     {
-        name: 'install',
-        message: 'Provide installation instructions.'
+        name: installId,
+        message: `Provide ${chalk.red(`installation`)} instructions.`,
+        default: `\`\`\`sh\nnpm install <your package name>\n\`\`\``
     },
     {
-        name: 'usage',
-        message: 'Provide usage instructions.'
+        name: usageId,
+        message: `Provide ${chalk.red(`usage`)} instructions.`,
+        default: `\`\`\`sh\nnode index.js\n\`\`\``
     },
     {
-        name: 'license',
-        message: 'Provide a license for your project.',
+        name: licenseId,
+        message: `Provide a ${chalk.red(`license`)} for your project.`,
         default: 'MIT'
     },
     {
@@ -45,26 +40,26 @@ const questions = [
         message: 'Are you accepting new contributors?'
     },
     {
-        name: 'contrib',
-        message: 'Provide instructions for contributing.',
+        name: contribId,
+        message: `Provide instructions for ${chalk.red(`contributing`)}.`,
+        default: `Contact the repository owner if you would like to contribute.`,
         when: (answers) => answers.contribBool
     },
     {
-        name: 'tests',
-        message: 'Provide examples of how to use your project, and the expectant output.'
+        name: testsId,
+        message: `Provide ${chalk.red(`tests`)}: examples of how to use your project, and the expectant output.`,
+        default: `Test cases go here`
     },
     {
-        name: 'contact',
-        message: 'Provide your github username.'
+        name: contactId,
+        message: `Provide your github username.`,
+        default: `EddiEsteban`
     },
 ]
 
 const makeReadMe = inquirer.prompt(questions)
 
-const varToString = varObj => Object.keys(varObj)[0]
-
-function tocLinker(section){
-    sectionId = varToString({section})
+function tocLinker(sectionId){
     tocIds.push(sectionId)
     return `<a id=toc-${sectionId}></a>`
 }
@@ -72,9 +67,9 @@ function tocLinker(section){
 const tocHeaders = []
 const tocIds = []
 
-function sectionGenerator(sectionHeader, section){
+function sectionGenerator(sectionHeader, section, sectionId){
     tocHeaders.push(sectionHeader)
-    return `${tocLinker(section)}\n## ${sectionHeader}\n${section}\n`
+    return `${tocLinker(sectionId)}\n## ${sectionHeader}\n${section}\n`
 }
 
 const tocGenerator = ()=> {let toc = ''; 
@@ -86,13 +81,13 @@ async function init() {
     const readMeJSON = await makeReadMe
     let {title, desc, install, usage, license, contrib, tests, contact} = readMeJSON
     title = `# ${title}\n`
-    desc = sectionGenerator('Description', desc)
-    install = sectionGenerator('Installation', install)
-    usage = sectionGenerator('Usage', usage)
-    license = sectionGenerator('License', license)
-    contrib = sectionGenerator('Contributing', contrib)
-    tests = sectionGenerator('Tests', tests)
-    contact = sectionGenerator('Questions', contact)
+    desc = sectionGenerator('Description', desc, descId)
+    install = sectionGenerator('Installation', install, installId)
+    usage = sectionGenerator('Usage', usage, usageId)
+    license = sectionGenerator('License', license, licenseId)
+    contrib = sectionGenerator('Contributing', contrib, contribId)
+    tests = sectionGenerator('Tests', tests, testsId)
+    contact = sectionGenerator('Questions', contact, contactId)
     const readMe = `${title}${tocGenerator()}${desc}${install}${usage}`+
         `${license}${contrib}${tests}${contact}`
         
