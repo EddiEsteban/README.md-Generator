@@ -1,3 +1,6 @@
+![](https://img.shields.io/github/forks/EddiEsteban/Untitled-Project)
+![](https://img.shields.io/github/stars/EddiEsteban/Untitled-Project)
+![](https://img.shields.io/github/license/EddiEsteban/Untitled-Project)
 # Untitled Project
 1. [Description](#toc-desc)
 2. [Installation](#toc-install)

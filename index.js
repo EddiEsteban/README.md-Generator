@@ -8,6 +8,17 @@ let [titleId, descId, installId, usageId, licenseId,
     'contrib', 'tests', 'contact']
 
 const shellify = string => `\`\`\`sh\n${string}\n\`\`\``
+function githubName(string){
+    let output = ''
+    const githubRegex = /[A-Za-z0-9_.-]/
+    function readd(char){
+        if (githubRegex.test(char)) {output += char}
+        else {output += '-'}
+    }
+    [...string].forEach(char => readd(char))
+    output = output.replace(/(-)\1+/g, '$1')
+    return output
+}
 
 const questions = [
     {
@@ -87,7 +98,15 @@ const tocGenerator = ()=> {let toc = '';
 
 async function init() {
     const readMeJSON = await makeReadMe
+
+
     let {title, desc, install, usage, license, contrib, tests, contact} = readMeJSON
+
+    let badges = 
+        `![](https://img.shields.io/github/forks/${contact}/${githubName(title)})\n`+
+        `![](https://img.shields.io/github/stars/${contact}/${githubName(title)})\n`+
+        `![](https://img.shields.io/github/license/${contact}/${githubName(title)})\n`
+
     title = `# ${title}\n`
     desc = sectionGenerator('Description', desc, descId)
     install = sectionGenerator('Installation', shellify(install), installId)
@@ -96,7 +115,7 @@ async function init() {
     contrib = sectionGenerator('Contributing', contrib, contribId)
     tests = sectionGenerator('Tests', tests, testsId)
     contact = sectionGenerator('Questions', contact, contactId)
-    const readMe = `${title}${tocGenerator()}${desc}${install}${usage}`+
+    const readMe = `${badges}${title}${tocGenerator()}${desc}${install}${usage}`+
         `${license}${contrib}${tests}${contact}`
         
         
